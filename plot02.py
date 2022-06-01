@@ -1,13 +1,10 @@
 import matplotlib.pyplot as plt
 import pandas as pd
-import plotly.express as px
-from plotly.subplots import make_subplots
-import plotly.graph_objects as go
 import numpy as np
 
 
-df = pd.read_csv('dados/HIST_PAINEL_COVIDBR_2022_Parte1_16mai2022.csv', sep=';', parse_dates=['data'])
-df.head()
+URL = 'https://raw.githubusercontent.com/Felipe500/Trabalho-visualizacao-de-dados/main/dados/HIST_PAINEL_COVIDBR_2022_Parte1_16mai2022.csv'
+df = pd.read_csv(URL, sep=';', parse_dates=['data'])
 
 df['casosAcumulado'] = df['casosAcumulado'].astype(int)
 
@@ -20,8 +17,6 @@ colunas = df.keys()
 
 
 nordeste = df.query('regiao == "Nordeste" and ano == 2022')
-nordeste_mes_5 = df.query('regiao == "Nordeste" and ano == 2022 and mes==5')
-nordeste_mes_5.head()
 #veja quais os anos estão filtrados
 
 
@@ -30,9 +25,7 @@ nordeste = nordeste.replace(np.nan, 0)
 
 
 #agupar valores de casos por estado, ano e mês.
-dt_agrupado_nordeste = nordeste.groupby(['estado','mes'])['casosNovos', 'obitosNovos'].max().reset_index()
-dt_agrupado_nordestsum = nordeste.groupby(['estado'])['casosNovos', 'obitosNovos'].sum().reset_index()
-dt_agrupado_nordeste2 = nordeste_mes_5.groupby(['estado','mes'])['casosNovos', 'obitosNovos'].max().reset_index()
+dt_agrupado_nordeste = nordeste.groupby(['estado'])['casosNovos', 'obitosNovos'].sum().reset_index()
 
 
 
@@ -40,9 +33,12 @@ itens_estados = dt_agrupado_nordeste['estado'].unique()
 print(itens_estados)
 
 # criar uma figura para grafico de barras
-fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(16,9),  )
-ax[0].pie(dt_agrupado_nordestsum['casosNovos'], labels=itens_estados, autopct='%1.2f%%', shadow=True, startangle=90);
-ax[1].pie(dt_agrupado_nordestsum['obitosNovos'], labels=itens_estados, autopct='%1.2f%%', shadow=True, startangle=90);
-ax[0].set_title('PORCENTAGEM DOS CASOS NOVOS REGISTRADOS NO NORDESTE')
-ax[1].set_title('PORCENTAGEM DOS OBITOS REGISRADOS NO NORDESTE')
+fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(16, 9))
+ax[0].pie(dt_agrupado_nordeste['casosNovos'], labels=itens_estados, autopct='%1.2f%%', shadow=True,
+          startangle=190, textprops={'fontsize': 12});
+ax[1].pie(dt_agrupado_nordeste['obitosNovos'], labels=itens_estados, autopct='%1.2f%%', shadow=True,
+          startangle=190,  textprops={'fontsize': 12});
+ax[0].set_title('PORCENTAGEM DOS CASOS NOVOS\n REGISTRADOS NO NORDESTE EM 2022')
+ax[1].set_title('PORCENTAGEM DOS OBITOS\n  REGISRADOS NO NORDESTE EM 2022')
+
 plt.show()
