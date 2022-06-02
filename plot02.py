@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 
 
-URL = 'https://raw.githubusercontent.com/Felipe500/Trabalho-visualizacao-de-dados/main/dados/HIST_PAINEL_COVIDBR_2022_Parte1_16mai2022.csv'
+URL = 'https://raw.githubusercontent.com/Trabalho-visualizacao-da-informacao/main/dados/HIST_PAINEL_COVIDBR_2022_Parte1_16mai2022.csv'
 df = pd.read_csv(URL, sep=';', parse_dates=['data'])
 
 df['casosAcumulado'] = df['casosAcumulado'].astype(int)

@@ -5,7 +5,7 @@ import numpy as np
 import plotly.graph_objects as go
 
 #carregar dados para analise, processamento e  visualização de dados.
-URL = 'https://raw.githubusercontent.com/Felipe500/Trabalho-visualizacao-de-dados/main/dados/HIST_PAINEL_COVIDBR_2022_Parte1_16mai2022.csv'
+URL = 'https://raw.githubusercontent.com/Felipe500/Trabalho-visualizacao-da-informacao/main/dados/HIST_PAINEL_COVIDBR_2022_Parte1_16mai2022.csv'
 df = pd.read_csv(URL, sep=';', parse_dates=['data'])
 
 #definir campo 'casosAcumulado' como inteiro
